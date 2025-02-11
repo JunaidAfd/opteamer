@@ -61,11 +61,6 @@ public class OperationRoomService {
         }).orElse(false);
     }
 
-    private OperationRoom mapDtoToEntity(OperationRoomDTO operationRoomDTO){
-        ModelMapper modelMapper=new ModelMapper();
-        return modelMapper.map(operationRoomDTO,OperationRoom.class);
-    }
-
     private OperationRoomDTO mapEntityToDTO(OperationRoom operationRoom){
         ModelMapper modelMapper=new ModelMapper();
         return modelMapper.map(operationRoom, OperationRoomDTO.class);

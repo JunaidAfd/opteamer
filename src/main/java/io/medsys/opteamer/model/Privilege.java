@@ -10,7 +10,7 @@ import lombok.Setter;
 import java.util.Collection;
 
 @Entity
-@Table(name = "PRIVILEGES")
+@Table(name = "USERPRIVILEGES")
 @Getter
 @Setter
 @AllArgsConstructor

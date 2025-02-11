@@ -61,10 +61,6 @@ public class PatientService {
         }).orElse(false);
     }
 
-    private Patient mapDTOToEntity(PatientDTO patientDTO){
-        ModelMapper modelMapper=new ModelMapper();
-        return modelMapper.map(patientDTO,Patient.class);
-    }
 
     private PatientDTO mapEntityToDTO(Patient patient){
         ModelMapper modelMapper=new ModelMapper();

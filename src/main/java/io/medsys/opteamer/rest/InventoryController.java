@@ -9,6 +9,7 @@ import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @RestController
@@ -36,8 +37,12 @@ public class InventoryController {
 
     @PostMapping
     public ResponseEntity<InventoryDTO> createInventory(@RequestBody InventoryDTO inventoryDTO){
-        InventoryDTO createdInventoryDTO=inventoryService.createInventory(inventoryDTO);
-        return ResponseEntity.status(HttpStatus.CREATED).body(createdInventoryDTO);
+        try{
+            InventoryDTO createdInventoryDTO=inventoryService.createInventory(inventoryDTO);
+            return ResponseEntity.status(HttpStatus.CREATED).body(createdInventoryDTO);
+        }catch (NoSuchElementException e){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
     }
 
     @PutMapping("/{id}")
