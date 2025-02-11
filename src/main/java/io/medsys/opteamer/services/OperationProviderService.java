@@ -4,6 +4,7 @@ import io.medsys.opteamer.dto.OperationProviderDTO;
 import io.medsys.opteamer.model.OperationProvider;
 import io.medsys.opteamer.model.enums.OperationProviderType;
 import io.medsys.opteamer.repositories.OperationProviderRepository;
+import io.medsys.opteamer.utils.ModelMapperUtils;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,7 +26,7 @@ public class OperationProviderService {
     public Optional<OperationProviderDTO> getOperationProviderById(String id){
         try{
             OperationProvider operationProvider = operationProviderRepository.findByType(OperationProviderType.valueOf(id)).orElseThrow();
-            return Optional.of(mapEntityToDTO(operationProvider));
+            return Optional.of(ModelMapperUtils.mapOperationProviderEntityToDTO(operationProvider));
         }catch (NoSuchElementException e){
             return Optional.empty();
         }
@@ -34,7 +35,7 @@ public class OperationProviderService {
     public List<OperationProviderDTO> getAllOperationProvider(){
         List<OperationProviderDTO> list=new ArrayList<>();
         Iterable<OperationProvider> allOperationProviders = operationProviderRepository.findAll();
-        allOperationProviders.forEach(operationProvider -> list.add(mapEntityToDTO(operationProvider)));
+        allOperationProviders.forEach(operationProvider -> list.add(ModelMapperUtils.mapOperationProviderEntityToDTO(operationProvider)));
         return list;
     }
 
@@ -49,7 +50,7 @@ public class OperationProviderService {
         return operationProviderRepository.findByType(OperationProviderType.valueOf(id)).map(operationProvider -> {
             operationProvider.setType(operationProviderDTO.getType());
             operationProviderRepository.save(operationProvider);
-            return mapEntityToDTO(operationProvider);
+            return ModelMapperUtils.mapOperationProviderEntityToDTO(operationProvider);
         });
     }
 
@@ -60,13 +61,4 @@ public class OperationProviderService {
         }).orElse(false);
     }
 
-    private OperationProvider mapDtoToEntity(OperationProviderDTO operationProviderDTO){
-        ModelMapper modelMapper=new ModelMapper();
-        return modelMapper.map(operationProviderDTO,OperationProvider.class);
-    }
-
-    private OperationProviderDTO mapEntityToDTO(OperationProvider operationProvider){
-        ModelMapper modelMapper=new ModelMapper();
-        return modelMapper.map(operationProvider,OperationProviderDTO.class);
-    }
 }

@@ -60,11 +60,6 @@ public class AssetService {//Service Implements the Business logic of an applica
         });
     }
 
-    private Asset mapDTOToEntity(AssetDTO assetDTO){
-        ModelMapper modelMapper=new ModelMapper();
-        return modelMapper.map(assetDTO,Asset.class);
-    }
-
     private AssetDTO mapEntityToDTO(Asset asset){
         ModelMapper modelMapper=new ModelMapper();
         return modelMapper.map(asset,AssetDTO.class);
